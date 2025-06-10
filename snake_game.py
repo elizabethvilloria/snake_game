@@ -18,6 +18,9 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
+food_color = RED
+snake_color = GREEN
+
 # Set up the display
 screen = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
 pygame.display.set_caption("Snake Game")
@@ -127,13 +130,16 @@ def main():
                 food.position = food.generate_position(snake.body)
                 score += 1
                 eat_sound.play()
+                # Make food a random color, but mistakenly also change snake color
+                food_color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
+                snake_color = food_color
 
         # Draw everything
         screen.fill(BLACK)
         
         # Draw snake
         for i, segment in enumerate(snake.body):
-            pygame.draw.rect(screen, GREEN,
+            pygame.draw.rect(screen, snake_color,
                            (segment[0] * GRID_SIZE, segment[1] * GRID_SIZE,
                             GRID_SIZE - 2, GRID_SIZE - 2))
             # Draw eyes (face) only on the head
@@ -147,7 +153,7 @@ def main():
                 pygame.draw.circle(screen, WHITE, eye2_center, eye_radius)
 
         # Draw food
-        pygame.draw.rect(screen, RED,
+        pygame.draw.rect(screen, food_color,
                         (food.position[0] * GRID_SIZE, food.position[1] * GRID_SIZE,
                          GRID_SIZE - 2, GRID_SIZE - 2))
 
