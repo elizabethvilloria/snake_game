@@ -22,8 +22,8 @@ RED = (255, 0, 0)
 screen = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
 pygame.display.set_caption("Snake Game")
 
-# Load sound (intentional mistake: wrong file name)
-eat_sound = pygame.mixer.Sound('eat.wav')
+# Load sound (fix file name)
+eat_sound = pygame.mixer.Sound('eat_sound.wav')
 
 def load_high_score():
     try:
