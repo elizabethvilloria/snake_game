@@ -22,6 +22,9 @@ RED = (255, 0, 0)
 screen = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
 pygame.display.set_caption("Snake Game")
 
+# Load sound (intentional mistake: wrong file name)
+eat_sound = pygame.mixer.Sound('eat.wav')
+
 def load_high_score():
     try:
         with open('high_score.json', 'r') as f:
@@ -123,15 +126,25 @@ def main():
                 snake.grow = True
                 food.position = food.generate_position(snake.body)
                 score += 1
+                eat_sound.play()
 
         # Draw everything
         screen.fill(BLACK)
         
         # Draw snake
-        for segment in snake.body:
+        for i, segment in enumerate(snake.body):
             pygame.draw.rect(screen, GREEN,
                            (segment[0] * GRID_SIZE, segment[1] * GRID_SIZE,
                             GRID_SIZE - 2, GRID_SIZE - 2))
+            # Draw eyes (face) only on the head
+            if i == 0:
+                eye_radius = 3
+                eye_offset_x = 5
+                eye_offset_y = 5
+                eye1_center = (segment[0] * GRID_SIZE + eye_offset_x, segment[1] * GRID_SIZE + eye_offset_y)
+                eye2_center = (segment[0] * GRID_SIZE + GRID_SIZE - eye_offset_x, segment[1] * GRID_SIZE + eye_offset_y)
+                pygame.draw.circle(screen, WHITE, eye1_center, eye_radius)
+                pygame.draw.circle(screen, WHITE, eye2_center, eye_radius)
 
         # Draw food
         pygame.draw.rect(screen, RED,
