@@ -22,6 +22,9 @@ pygame.display.set_caption("Snake Game")
 
 class Snake:
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.body = [(GRID_COUNT // 2, GRID_COUNT // 2)]
         self.direction = [1, 0]  # Start moving right
         self.grow = False
@@ -74,14 +77,21 @@ def main():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    snake.change_direction([0, -1])
-                elif event.key == pygame.K_DOWN:
-                    snake.change_direction([0, 1])
-                elif event.key == pygame.K_LEFT:
-                    snake.change_direction([-1, 0])
-                elif event.key == pygame.K_RIGHT:
-                    snake.change_direction([1, 0])
+                if not game_over:
+                    if event.key == pygame.K_UP:
+                        snake.change_direction([0, -1])
+                    elif event.key == pygame.K_DOWN:
+                        snake.change_direction([0, 1])
+                    elif event.key == pygame.K_LEFT:
+                        snake.change_direction([-1, 0])
+                    elif event.key == pygame.K_RIGHT:
+                        snake.change_direction([1, 0])
+                elif event.key == pygame.K_SPACE:
+                    # Reset game
+                    snake.reset()
+                    food.position = food.generate_position()
+                    score = 0
+                    game_over = False
 
         if not game_over:
             # Move snake
@@ -114,8 +124,8 @@ def main():
         screen.blit(score_text, (10, 10))
 
         if game_over:
-            game_over_text = font.render('Game Over!', True, WHITE)
-            screen.blit(game_over_text, (WINDOW_SIZE//2 - 100, WINDOW_SIZE//2))
+            game_over_text = font.render('Game Over! Press SPACE to restart', True, WHITE)
+            screen.blit(game_over_text, (WINDOW_SIZE//2 - 200, WINDOW_SIZE//2))
 
         pygame.display.flip()
         clock.tick(10)  # Control game speed
