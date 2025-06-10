@@ -59,10 +59,13 @@ class Food:
     def __init__(self):
         self.position = self.generate_position()
 
-    def generate_position(self):
-        x = random.randint(0, GRID_COUNT - 1)
-        y = random.randint(0, GRID_COUNT - 1)
-        return (x, y)
+    def generate_position(self, snake_body=None):
+        while True:
+            x = random.randint(0, GRID_COUNT - 1)
+            y = random.randint(0, GRID_COUNT - 1)
+            position = (x, y)
+            if snake_body is None or position not in snake_body:
+                return position
 
 def main():
     clock = pygame.time.Clock()
@@ -89,7 +92,7 @@ def main():
                 elif event.key == pygame.K_SPACE:
                     # Reset game
                     snake.reset()
-                    food.position = food.generate_position()
+                    food.position = food.generate_position(snake.body)
                     score = 0
                     game_over = False
 
@@ -101,7 +104,7 @@ def main():
             # Check for food collision
             if snake.body[0] == food.position:
                 snake.grow = True
-                food.position = food.generate_position()
+                food.position = food.generate_position(snake.body)
                 score += 1
 
         # Draw everything
