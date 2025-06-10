@@ -1,6 +1,8 @@
 import pygame
 import random
 import sys
+import json
+import os
 
 # Initialize Pygame
 pygame.init()
@@ -19,6 +21,17 @@ RED = (255, 0, 0)
 # Set up the display
 screen = pygame.display.set_mode((WINDOW_SIZE, WINDOW_SIZE))
 pygame.display.set_caption("Snake Game")
+
+def load_high_score():
+    try:
+        with open('high_score.json', 'r') as f:
+            return json.load(f)['high_score']
+    except (FileNotFoundError, json.JSONDecodeError):
+        return 0
+
+def save_high_score(score):
+    with open('high_score.json', 'w') as f:
+        json.dump({'high_score': score}, f)
 
 class Snake:
     def __init__(self):
@@ -72,6 +85,7 @@ def main():
     snake = Snake()
     food = Food()
     score = 0
+    high_score = load_high_score()
     game_over = False
 
     while True:
@@ -100,6 +114,9 @@ def main():
             # Move snake
             if not snake.move():
                 game_over = True
+                if score > high_score:
+                    high_score = score
+                    save_high_score(high_score)
 
             # Check for food collision
             if snake.body[0] == food.position:
@@ -121,10 +138,12 @@ def main():
                         (food.position[0] * GRID_SIZE, food.position[1] * GRID_SIZE,
                          GRID_SIZE - 2, GRID_SIZE - 2))
 
-        # Draw score
+        # Draw score and high score
         font = pygame.font.Font(None, 36)
         score_text = font.render(f'Score: {score}', True, WHITE)
+        high_score_text = font.render(f'High Score: {high_score}', True, WHITE)
         screen.blit(score_text, (10, 10))
+        screen.blit(high_score_text, (10, 50))
 
         if game_over:
             game_over_text = font.render('Game Over! Press SPACE to restart', True, WHITE)
