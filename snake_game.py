@@ -177,6 +177,11 @@ def main():
         screen.blit(score_text, (10, 10))
         screen.blit(high_score_text, (10, 50))
 
+        # Draw instructions
+        instruction_font = pygame.font.Font(None, 24)
+        instruction_text = instruction_font.render('Use arrow keys to move, P to pause', True, WHITE)
+        screen.blit(instruction_text, (10, WINDOW_SIZE - 30))
+
         if game_over:
             game_over_text = font.render('Game Over! Press SPACE to restart', True, WHITE)
             screen.blit(game_over_text, (WINDOW_SIZE//2 - 200, WINDOW_SIZE//2))
