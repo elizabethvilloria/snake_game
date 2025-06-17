@@ -132,7 +132,7 @@ def main():
                 eat_sound.play()
                 # Make food a random color, but mistakenly also change snake color
                 food_color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
-                snake_color = food_color
+                snake_color = GREEN
 
         # Draw everything
         screen.fill(BLACK)
