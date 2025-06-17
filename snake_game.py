@@ -93,6 +93,7 @@ def main():
     score = 0
     high_score = load_high_score()
     game_over = False
+    paused = False
 
     while True:
         for event in pygame.event.get():
@@ -100,7 +101,9 @@ def main():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if not game_over:
+                if event.key == pygame.K_p:
+                    paused = not paused
+                elif not game_over and not paused:
                     if event.key == pygame.K_UP:
                         snake.change_direction([0, -1])
                     elif event.key == pygame.K_DOWN:
@@ -115,8 +118,9 @@ def main():
                     food.position = food.generate_position(snake.body)
                     score = 0
                     game_over = False
+                    paused = False
 
-        if not game_over:
+        if not game_over and not paused:
             # Move snake
             if not snake.move():
                 game_over = True
@@ -167,6 +171,10 @@ def main():
         if game_over:
             game_over_text = font.render('Game Over! Press SPACE to restart', True, WHITE)
             screen.blit(game_over_text, (WINDOW_SIZE//2 - 200, WINDOW_SIZE//2))
+
+        if paused:
+            pause_text = font.render('PAUSED - Press P to continue', True, WHITE)
+            screen.blit(pause_text, (WINDOW_SIZE//2 - 150, WINDOW_SIZE//2 + 50))
 
         pygame.display.flip()
         clock.tick(10)  # Control game speed
