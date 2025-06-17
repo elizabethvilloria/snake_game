@@ -146,6 +146,10 @@ def main():
         # Draw everything
         screen.fill(BLACK)
         
+        # Draw border
+        border_width = 2
+        pygame.draw.rect(screen, WHITE, (0, 0, WINDOW_SIZE, WINDOW_SIZE), border_width)
+        
         # Draw snake
         for i, segment in enumerate(snake.body):
             pygame.draw.rect(screen, snake_color,
