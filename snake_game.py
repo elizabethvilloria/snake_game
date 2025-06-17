@@ -94,6 +94,7 @@ def main():
     high_score = load_high_score()
     game_over = False
     paused = False
+    game_speed = 10
 
     while True:
         for event in pygame.event.get():
@@ -119,6 +120,7 @@ def main():
                     score = 0
                     game_over = False
                     paused = False
+                    game_speed = 10
 
         if not game_over and not paused:
             # Move snake
@@ -137,6 +139,9 @@ def main():
                 # Make food a random color, but mistakenly also change snake color
                 food_color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
                 snake_color = GREEN
+                # Increase speed every 5 points
+                if score % 5 == 0:
+                    game_speed += 1
 
         # Draw everything
         screen.fill(BLACK)
@@ -177,7 +182,7 @@ def main():
             screen.blit(pause_text, (WINDOW_SIZE//2 - 150, WINDOW_SIZE//2 + 50))
 
         pygame.display.flip()
-        clock.tick(10)  # Control game speed
+        clock.tick(game_speed)  # Control game speed
 
 if __name__ == "__main__":
     main() 
