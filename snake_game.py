@@ -160,6 +160,7 @@ def main():
                             GRID_SIZE - 2, GRID_SIZE - 2))
             # Draw eyes (face) only on the head
             if i == 0:
+                # Draw two white circles for eyes
                 eye_radius = 3
                 eye_offset_x = 5
                 eye_offset_y = 5
