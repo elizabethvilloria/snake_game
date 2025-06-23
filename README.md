@@ -21,6 +21,7 @@ python snake_game.py
 
 Controls:
 - Use arrow keys to control the snake
+- Press P to pause/unpause the game
 - Eat the red food to grow and increase your score
 - Avoid hitting the walls and yourself
 
