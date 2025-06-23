@@ -176,8 +176,10 @@ def main():
         font = pygame.font.Font(None, 36)
         score_text = font.render(f'Score: {score}', True, WHITE)
         high_score_text = font.render(f'High Score: {high_score}', True, WHITE)
+        speed_text = font.render(f'Speed: {game_speed}', True, WHITE)
         screen.blit(score_text, (10, 10))
         screen.blit(high_score_text, (10, 50))
+        screen.blit(speed_text, (10, 90))
 
         # Draw instructions
         instruction_font = pygame.font.Font(None, 24)
