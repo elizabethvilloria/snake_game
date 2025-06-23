@@ -18,6 +18,9 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 
+# Game settings
+BORDER_WIDTH = 2
+
 food_color = RED
 snake_color = GREEN
 
@@ -147,8 +150,7 @@ def main():
         screen.fill(BLACK)
         
         # Draw border
-        border_width = 2
-        pygame.draw.rect(screen, WHITE, (0, 0, WINDOW_SIZE, WINDOW_SIZE), border_width)
+        pygame.draw.rect(screen, WHITE, (0, 0, WINDOW_SIZE, WINDOW_SIZE), BORDER_WIDTH)
         
         # Draw snake
         for i, segment in enumerate(snake.body):
