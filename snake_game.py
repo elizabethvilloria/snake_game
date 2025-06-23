@@ -125,6 +125,7 @@ def main():
                     game_over = False
                     paused = False
                     game_speed = 10
+                    food_color = RED  # Reset food color to red
 
         if not game_over and not paused:
             # Move snake
