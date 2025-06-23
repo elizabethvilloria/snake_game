@@ -137,9 +137,8 @@ def main():
                 food.position = food.generate_position(snake.body)
                 score += 1
                 eat_sound.play()
-                # Make food a random color, but mistakenly also change snake color
+                # Make food a random color
                 food_color = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
-                snake_color = GREEN
                 # Increase speed every 5 points
                 if score % 5 == 0:
                     game_speed += 1
